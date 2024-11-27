@@ -1,8 +1,9 @@
     const books = []
+    let bookIdToEdit = null
     const RENDER_EVENT = "render-book"
     const SAVED_EVENT = "saved-book"
     const STORAGE_KEY = "BOOKSHELF_APPS"
-
+   
     document.addEventListener("DOMContentLoaded", function() {
         if(isStorageExist) {
             loadDataFromStorage()
@@ -11,20 +12,37 @@
         const isCompleted = document.getElementById("bookFormIsComplete")
         isCompleted.addEventListener("change", function(event) {
             event.preventDefault()
-            changeSubmitText(this.checked)
+            changeSubmitText(this.checked) 
         })
         
         const submitForm = document.getElementById("bookForm")
         submitForm.addEventListener("submit", function(event) {
             event.preventDefault()
-            addBook()
+
+            if(bookIdToEdit !== null) {
+                updateBook()
+            } else {
+                addBook()
+            }
+        })
+
+        const searchButton = document.getElementById("searchBook")
+        searchButton.addEventListener("submit", function(event) {
+            event.preventDefault()
+            searchBookByTitle()
+        })
+
+        const resetButton = document.getElementById("resetSubmit")
+        resetButton.addEventListener("click", function(event) {
+            event.preventDefault()
+            document.dispatchEvent(new Event(RENDER_EVENT))
         })
     })
 
     function changeSubmitText(isCompleted) {
         const button = document.getElementById("bookFormSubmit")
         const text  = button.querySelector("span")
-        
+            
         if (isCompleted) {
             text.innerText = "Selesai dibaca"
         } else {
@@ -79,6 +97,8 @@
     }
 
     function makeBook(bookObject) {
+        const section = document.getElementById("sectionTitle")
+
         const title = document.createElement("h3")
         title.innerText = bookObject.title
 
@@ -94,11 +114,18 @@
         const buttonContainer = document.createElement("div")
         
         const removeButton= document.createElement("button")
+        removeButton.innerText = "Hapus buku"
         removeButton.addEventListener("click", function() {
             removeBook(bookObject.id)
         })
 
-        removeButton.innerText = "Hapus buku"
+        const editButton = document.createElement("button")
+        editButton.innerText = "Edit buku"
+        editButton.addEventListener("click", function() {
+            editForm(bookObject)
+            section.innerText = "Edit Buku"
+        })
+        
 
         if(bookObject.isCompleted) {
             const incompleteButton = document.createElement("button")
@@ -106,14 +133,14 @@
             incompleteButton.addEventListener("click", function() {
                 moveBookToIncomplete(bookObject.id)
             })
-            buttonContainer.append(incompleteButton, removeButton)
+            buttonContainer.append(incompleteButton, removeButton, editButton)
         } else {
             const completeButton = document.createElement("button")
             completeButton.innerText = "Selesai dibaca" 
             completeButton.addEventListener("click", function() {
                 moveBookToComplete(bookObject.id)
             })
-            buttonContainer.append(completeButton, removeButton)
+            buttonContainer.append(completeButton, removeButton, editButton)
         }
 
         const container = document.createElement("div")
@@ -147,6 +174,41 @@
         saveData()
     }
 
+    function editForm(bookObject) {
+        document.getElementById("bookFormTitle").value = bookObject.title
+        document.getElementById("bookFormAuthor").value = bookObject.author
+        document.getElementById("bookFormYear").value = bookObject.year
+        document.getElementById("bookFormIsComplete").checked = bookObject.isCompleted
+
+        if(document.getElementById("bookFormIsComplete").checked) {
+            changeSubmitText(true)
+        } else {
+            changeSubmitText(false)
+        }
+
+        bookIdToEdit = bookObject.id
+    }
+
+    function updateBook() {
+        const title = document.getElementById("bookFormTitle").value
+        const author = document.getElementById("bookFormAuthor").value
+        const year = document.getElementById("bookFormYear").value
+        const isCompleted = document.getElementById("bookFormIsComplete").checked
+
+        const index = findBookIndex(bookIdToEdit)
+        
+        if(index !== -1) {
+            books[index] = generateBookObject(bookIdToEdit, title, author, year, isCompleted)
+            document.getElementById("sectionTitle").innerText = "Tambah Buku Baru"
+            document.dispatchEvent(new Event(RENDER_EVENT))
+            saveData()
+        }
+
+        bookIdToEdit = null
+        document.getElementById("bookForm").reset()
+        changeSubmitText(false)
+    }
+
     function saveData(){
         if(isStorageExist()) {
             const parsed = JSON.stringify(books)
@@ -175,6 +237,26 @@
         }
 
         document.dispatchEvent(new Event(RENDER_EVENT))
+    }
+
+    function searchBookByTitle() {
+        const searchTitle = document.getElementById("searchBookTitle").value.toLowerCase()
+        const incompleteBookList = document.getElementById("incompleteBookList")
+        const completeBookList = document.getElementById("completeBookList")
+
+        incompleteBookList.innerText = ""
+        completeBookList.innerText = ""
+
+        for(const book of books) {
+            if(book.title.toLowerCase().includes(searchTitle)) {
+                const bookElement = makeBook(book)
+                if(book.isCompleted) {
+                    completeBookList.append(bookElement)
+                } else {
+                    incompleteBookList.append(bookElement)
+                }
+            }
+        }
     }
 
     document.addEventListener(RENDER_EVENT, function() {
