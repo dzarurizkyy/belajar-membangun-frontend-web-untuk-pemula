@@ -1,7 +1,13 @@
     const books = []
     const RENDER_EVENT = "render-book"
+    const SAVED_EVENT = "saved-book"
+    const STORAGE_KEY = "BOOKSHELF_APPS"
 
     document.addEventListener("DOMContentLoaded", function() {
+        if(isStorageExist) {
+            loadDataFromStorage()
+        }
+
         const isCompleted = document.getElementById("bookFormIsComplete")
         isCompleted.addEventListener("change", function(event) {
             event.preventDefault()
@@ -69,6 +75,7 @@
         books.push(bookObject)
 
         document.dispatchEvent(new Event(RENDER_EVENT))
+        saveData()
     }
 
     function makeBook(bookObject) {
@@ -121,6 +128,7 @@
         if(bookTarget === null) return
         bookTarget.isCompleted = true
         document.dispatchEvent(new Event(RENDER_EVENT))
+        saveData()
     }
 
     function moveBookToIncomplete(bookID) {
@@ -128,12 +136,44 @@
         if(bookTarget === null) return
         bookTarget.isCompleted = false
         document.dispatchEvent(new Event(RENDER_EVENT))
+        saveData()
     }
 
     function removeBook(bookID) {
         const bookTarget = findBookIndex(bookID)
         if(bookTarget === -1) return
         books.splice(bookTarget, 1)
+        document.dispatchEvent(new Event(RENDER_EVENT))
+        saveData()
+    }
+
+    function saveData(){
+        if(isStorageExist()) {
+            const parsed = JSON.stringify(books)
+            localStorage.setItem(STORAGE_KEY, parsed)
+            document.dispatchEvent(new Event(SAVED_EVENT))
+        }
+    }   
+    
+    function isStorageExist() {
+        if(typeof(Storage) === undefined){
+            alert("Browser kamu tidak mendukung local storage")
+            return false
+        }
+
+        return true
+    }
+
+    function loadDataFromStorage() {
+        const serializedData = localStorage.getItem(STORAGE_KEY)
+        let data = JSON.parse(serializedData)
+
+        if(data !== null) {
+            for(const book of data) {
+                books.push(book)
+            }
+        }
+
         document.dispatchEvent(new Event(RENDER_EVENT))
     }
 
@@ -153,4 +193,8 @@
                 uncompletedBookList.append(bookElement)
             }
         }
+    })
+
+    document.addEventListener(SAVED_EVENT, function() {
+        console.log(localStorage.getItem(STORAGE_KEY))
     })
