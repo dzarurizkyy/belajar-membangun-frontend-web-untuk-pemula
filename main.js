@@ -97,15 +97,15 @@
     }
 
     function makeBook(bookObject) {
-        const section = document.getElementById("sectionTitle")
-
         const title = document.createElement("h3")
         title.innerText = bookObject.title
 
         const author = document.createElement("p")
+        author.classList.add("bookAuthor")
         author.innerText = bookObject.author
 
         const year = document.createElement("p")
+        year.classList.add("bookYear")
         year.innerText = bookObject.year
 
         const textContainer = document.createElement("div")
@@ -115,21 +115,24 @@
         
         const removeButton= document.createElement("button")
         removeButton.innerText = "Hapus buku"
+        removeButton.classList.add("button")
         removeButton.addEventListener("click", function() {
             removeBook(bookObject.id)
         })
 
         const editButton = document.createElement("button")
         editButton.innerText = "Edit buku"
+        editButton.classList.add("button")
         editButton.addEventListener("click", function() {
             editForm(bookObject)
-            section.innerText = "Edit Buku"
+            document.getElementById("sectionTitle").innerText = "Edit Buku"
         })
         
 
         if(bookObject.isCompleted) {
             const incompleteButton = document.createElement("button")
             incompleteButton.innerText = "Belum selesai dibaca"
+            incompleteButton.classList.add("button")
             incompleteButton.addEventListener("click", function() {
                 moveBookToIncomplete(bookObject.id)
             })
@@ -137,13 +140,18 @@
         } else {
             const completeButton = document.createElement("button")
             completeButton.innerText = "Selesai dibaca" 
+            completeButton.classList.add("button")
             completeButton.addEventListener("click", function() {
                 moveBookToComplete(bookObject.id)
             })
             buttonContainer.append(completeButton, removeButton, editButton)
         }
 
+        buttonContainer.classList.add("buttonContainer")
+
         const container = document.createElement("div")
+        container.classList.add("bookContainer")
+
         container.append(textContainer, buttonContainer)
         container.setAttribute("id", `book-${bookObject.id}`)
 
