@@ -1,3 +1,4 @@
+/* Universal */
 * {
     margin: 0;
     box-sizing: border-box;
@@ -9,6 +10,7 @@ body {
     margin-bottom: 40px;
 }
 
+/* Header */
 header {
     padding: 14px 0px;
     display: flex;
@@ -17,18 +19,19 @@ header {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
 
-header > h1 {
+header>h1 {
     font-size: 20px;
     padding-left: 20px;
     font-weight: 700;
     color: #252D31;
 }
 
-header > h1::after {
+header>h1::after {
     content: " 📚";
     font-size: 26px;
 }
 
+/* Section */
 section {
     display: flex;
     flex-direction: column;
@@ -36,13 +39,14 @@ section {
     align-items: center;
 }
 
-section > #sectionTitle {
+section>#sectionTitle {
     margin: 40px 0px 22px 0px;
     font-size: 22px;
     text-align: center;
 }
 
-section > #bookForm {
+/* Form */
+section>#bookForm {
     display: flex;
     flex-direction: column;
     width: 450px;
@@ -56,29 +60,29 @@ section > #bookForm {
     -o-border-radius: 14px;
 }
 
-section > form > div {
+section>form>div {
     margin-bottom: 10px;
 }
 
-section > form > .bookInput {
+section>form>.bookInput {
     display: flex;
     flex-direction: column;
     gap: 4px;
 }
 
-section > form > .bookInput > label {
+section>form>.bookInput>label {
     cursor: pointer;
 }
 
-section > form > .bookInput > label::after {
+section>form>.bookInput>label::after {
     content: ":";
 }
 
-section > form > .bookInput > input {
+section>form>.bookInput>input {
     padding: 6px;
 }
 
-section > form > .bookCheckbox {
+section>form>.bookCheckbox {
     margin-top: 4px;
     margin-bottom: 24px;
     display: flex;
@@ -86,24 +90,25 @@ section > form > .bookCheckbox {
     gap: 6px;
 }
 
-section > form > .bookCheckbox > label {
+section>form>.bookCheckbox>label {
     cursor: pointer;
 }
 
-section > form > .bookCheckbox > label::after {
+section>form>.bookCheckbox>label::after {
     content: ":";
 }
 
-section > form > button {
+section>form>button {
     padding: 6px;
     cursor: pointer;
 }
 
-section > #searchTitle {
+/* Search */
+section>#searchTitle {
     display: none;
 }
 
-section > #searchBook {
+section>#searchBook {
     display: flex;
     gap: 10px;
     justify-content: center;
@@ -120,21 +125,21 @@ section > #searchBook {
     -o-border-radius: 10px;
 }
 
-section > #searchBook > label{
+section>#searchBook>label {
     font-size: 16px;
     cursor: pointer;
 }
 
-section > #searchBook > label::after {
+section>#searchBook>label::after {
     content: ":";
 }
 
-section > #searchBook > input {
+section>#searchBook>input {
     width: 200px;
     padding: 2px 10px;
 }
 
-section > #searchBook > button {
+section>#searchBook>button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -143,7 +148,8 @@ section > #searchBook > button {
     cursor: pointer;
 }
 
-section > .bookTitle {
+/* List of Books */
+section>.bookTitle {
     width: 450px;
     margin-top: 30px;
     margin-bottom: 14px;
@@ -152,7 +158,8 @@ section > .bookTitle {
     text-align: left;
 }
 
-section > #incompleteBookList, #completeBookList {
+section>#incompleteBookList,
+#completeBookList {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -188,29 +195,30 @@ section > #incompleteBookList, #completeBookList {
     gap: 10px;
 }
 
+/* Mobile Size */
 @media only screen and (max-width: 900px) {
-    section > #bookForm {
+    section>#bookForm {
         width: 90%;
     }
-    
-    section > #searchBook {
+
+    section>#searchBook {
         width: 90%;
         padding: 20px;
     }
 
-    section > #searchBook > label {
+    section>#searchBook>label {
         font-size: 14px;
     }
-    
-    section > #searchBook > input {
+
+    section>#searchBook>input {
         width: 80%;
     }
 
-    section > .bookTitle{
+    section>.bookTitle {
         width: 90%;
     }
-    
-    .bookContainer{
-        width: 90vw;  
+
+    .bookContainer {
+        width: 90vw;
     }
 }

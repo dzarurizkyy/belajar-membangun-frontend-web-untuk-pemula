@@ -1,92 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bookshelf App</title>
-    <link rel="stylesheet" href="style.css" type="text/css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <script src="main.js" type="text/javascript" defer></script>
-  </head>
-  <body>
-    <header>
-      <h1>Bookshelf App</h1>
-    </header>
-    <main>
-      <section>
-        <h2 id="sectionTitle">Tambah Buku Baru</h2>
-        <form id="bookForm" data-testid="bookForm">
-          <div class="bookInput">
-            <label for="bookFormTitle">Judul</label>
-            <input id="bookFormTitle" type="text" required data-testid="bookFormTitleInput" placeholder="Masukkan judul buku" />
-          </div>
-          <div class="bookInput">
-            <label for="bookFormAuthor">Penulis</label>
-            <input id="bookFormAuthor" type="text" required data-testid="bookFormAuthorInput" placeholder="Masukkan penulis buku" />
-          </div>
-          <div class="bookInput">
-            <label for="bookFormYear">Tahun</label>
-            <input id="bookFormYear" type="number" required data-testid="bookFormYearInput" placeholder="Masukkan tahun buku" />
-          </div>
-          <div class="bookCheckbox">
-            <label for="bookFormIsComplete">Selesai dibaca</label>
-            <input
-              id="bookFormIsComplete"
-              type="checkbox"
-              data-testid="bookFormIsCompleteCheckbox"
-            />
-          </div>
-          <button id="bookFormSubmit" type="submit" data-testid="bookFormSubmitButton">
-            Masukkan Buku ke rak <span>Belum selesai dibaca</span>
-          </button>
-        </form>
-      </section>
-      <section>
-        <h2 id="searchTitle">Cari Buku</h2>
-        <form id="searchBook" data-testid="searchBookForm">
-          <label for="searchBookTitle">Judul</label>
-          <input id="searchBookTitle" type="text" data-testid="searchBookFormTitleInput" placeholder="Masukkan judul buku"/>
-          <button id="searchSubmit" type="submit" data-testid="searchBookFormSubmitButton">
-            Cari
-          </button>
-          <button id="resetSubmit" type="submit" data-testid="resetBookFormSubmitButton">
-            Reset
-          </button>
-        </form>
-      </section>
-      <section>
-        <h2 class="bookTitle">Belum selesai dibaca</h2>
-        <div id="incompleteBookList" data-testid="incompleteBookList">
-          <div data-bookid="{{ ID_buku }}" data-testid="bookItem">
-            <h3 data-testid="bookItemTitle">{{ judul_buku }}</h3>
-            <p data-testid="bookItemAuthor">Penulis: {{ penulis_buku }}</p>
-            <p data-testid="bookItemYear">Tahun: {{ tahun_rilis_buku }}</p>
-            <div>
-              <button data-testid="bookItemIsCompleteButton">{{ tombol_untuk_ubah_kondisi }}</button>
-              <button data-testid="bookItemDeleteButton">{{ tombol_untuk_hapus }}</button>
-              <button data-testid="bookItemEditButton">{{ tombol_untuk_edit }}</button>
-            </div>
-          </div>
+
+<head>
+  <!-- Meta Tag -->
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Page Title -->
+  <title>Bookshelf App</title>
+  <!-- Import CSS -->
+  <link rel="stylesheet" href="style.css" type="text/css">
+  <!-- Import Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <!-- Import External Javascript -->
+  <script src="main.js" type="text/javascript" defer></script>
+</head>
+
+<body>
+  <!-- Title -->
+  <header>
+    <h1>Bookshelf App</h1>
+  </header>
+  <!-- Content -->
+  <main>
+    <!-- Form -->
+    <section>
+      <!-- Form Title -->
+      <h2 id="sectionTitle">Tambah Buku Baru</h2>
+      <!-- Input Title -->
+      <form id="bookForm" data-testid="bookForm">
+        <div class="bookInput">
+          <label for="bookFormTitle">Judul</label>
+          <input id="bookFormTitle" type="text" required data-testid="bookFormTitleInput"
+            placeholder="Masukkan judul buku" />
+        </div>
+        <!-- Input Author -->
+        <div class="bookInput">
+          <label for="bookFormAuthor">Penulis</label>
+          <input id="bookFormAuthor" type="text" required data-testid="bookFormAuthorInput"
+            placeholder="Masukkan penulis buku" />
+        </div>
+        <!-- Input Year -->
+        <div class="bookInput">
+          <label for="bookFormYear">Tahun</label>
+          <input id="bookFormYear" type="number" required data-testid="bookFormYearInput"
+            placeholder="Masukkan tahun buku" />
+        </div>
+        <!-- Input isComplete -->
+        <div class="bookCheckbox">
+          <label for="bookFormIsComplete">Selesai dibaca</label>
+          <input id="bookFormIsComplete" type="checkbox" data-testid="bookFormIsCompleteCheckbox" />
+        </div>
+        <!-- Submit Button -->
+        <button id="bookFormSubmit" type="submit" data-testid="bookFormSubmitButton">
+          Masukkan Buku ke rak <span>Belum selesai dibaca</span>
+        </button>
+      </form>
+    </section>
+    <!-- Search -->
+    <section>
+      <!-- Search Title -->
+      <h2 id="searchTitle">Cari Buku</h2>
+      <!-- Search Form -->
+      <form id="searchBook" data-testid="searchBookForm">
+        <!-- Search Label -->
+        <label for="searchBookTitle">Judul</label>
+        <!-- Search Input -->
+        <input id="searchBookTitle" type="text" data-testid="searchBookFormTitleInput"
+          placeholder="Masukkan judul buku" />
+        <!-- Search Button -->
+        <button id="searchSubmit" type="submit" data-testid="searchBookFormSubmitButton">
+          Cari
+        </button>
+        <!-- Reset Button -->
+        <button id="resetSubmit" type="submit" data-testid="resetBookFormSubmitButton">
+          Reset
+        </button>
+      </form>
+    </section>
+    <!-- Incomplete Book -->
+    <section>
+      <!-- Section Title -->
+      <h2 class="bookTitle">Belum selesai dibaca</h2>
+      <!-- Container -->
+      <div id="incompleteBookList" data-testid="incompleteBookList">
+        <!-- Card -->
+        <div data-bookid="{{ ID_buku }}" data-testid="bookItem">
+          <!-- Book Title -->
+          <h3 data-testid="bookItemTitle">{{ judul_buku }}</h3>
+          <!-- Book Author -->
+          <p data-testid="bookItemAuthor">Penulis: {{ penulis_buku }}</p>
+          <!-- Book Year -->
+          <p data-testid="bookItemYear">Tahun: {{ tahun_rilis_buku }}</p>
+          <!-- Action -->
+          <div>
+            <!-- Change isComplete Button -->
+            <button data-testid="bookItemIsCompleteButton">{{ tombol_untuk_ubah_kondisi }}</button>
+            <!-- Delete Button -->
+            <button data-testid="bookItemDeleteButton">{{ tombol_untuk_hapus }}</button>
+            <!-- Edit Button -->
+            <button data-testid="bookItemEditButton">{{ tombol_untuk_edit }}</button>
           </div>
         </div>
-      </section>
-      <section>
-        <h2 class="bookTitle">Selesai dibaca</h2>
-        <div id="completeBookList" data-testid="completeBookList">
-          <div data-bookid="{{ ID_buku }}" data-testid="bookItem">
-            <h3 data-testid="bookItemTitle">{{ judul_buku }}</h3>
-            <p data-testid="bookItemAuthor">Penulis: {{ penulis_buku }}</p>
-            <p data-testid="bookItemYear">Tahun: {{ tahun_rilis_buku }}</p>
-            <div>
-              <button data-testid="bookItemIsCompleteButton">{{ tombol_untuk_ubah_kondisi }}</button>
-              <button data-testid="bookItemDeleteButton">{{ tombol_untuk_hapus }}</button>
-              <button data-testid="bookItemEditButton">{{ tombol_untuk_edit }}</button>
-            </div>
+      </div>
+      </div>
+    </section>
+    <!-- Complete Book -->
+    <section>
+      <!-- Section Title -->
+      <h2 class="bookTitle">Selesai dibaca</h2>
+      <!-- Container -->
+      <div id="completeBookList" data-testid="completeBookList">
+        <!-- Card -->
+        <div data-bookid="{{ ID_buku }}" data-testid="bookItem">
+          <!-- Book Title -->
+          <h3 data-testid="bookItemTitle">{{ judul_buku }}</h3>
+          <!-- Book Author -->
+          <p data-testid="bookItemAuthor">Penulis: {{ penulis_buku }}</p>
+          <!-- Book Year -->
+          <p data-testid="bookItemYear">Tahun: {{ tahun_rilis_buku }}</p>
+          <!-- Action -->
+          <div>
+            <!-- Change isComplete Button -->
+            <button data-testid="bookItemIsCompleteButton">{{ tombol_untuk_ubah_kondisi }}</button>
+            <!-- Delete Button -->
+            <button data-testid="bookItemDeleteButton">{{ tombol_untuk_hapus }}</button>
+            <!-- Edit Button -->
+            <button data-testid="bookItemEditButton">{{ tombol_untuk_edit }}</button>
           </div>
         </div>
-      </section>
-    </main>
-  </body>
+      </div>
+    </section>
+  </main>
+</body>
+
 </html>
