@@ -9,8 +9,8 @@
             loadDataFromStorage()
         }
 
-        const isCompleted = document.getElementById("bookFormIsComplete")
-        isCompleted.addEventListener("change", function(event) {
+        const isComplete = document.getElementById("bookFormIsComplete")
+        isComplete.addEventListener("change", function(event) {
             event.preventDefault()
             changeSubmitText(this.checked) 
         })
@@ -39,11 +39,11 @@
         })
     })
 
-    function changeSubmitText(isCompleted) {
+    function changeSubmitText(isComplete) {
         const button = document.getElementById("bookFormSubmit")
         const text  = button.querySelector("span")
             
-        if (isCompleted) {
+        if (isComplete) {
             text.innerText = "Selesai dibaca"
         } else {
             text.innerText = "Belum selesai dibaca"
@@ -54,13 +54,13 @@
         return String(+new Date())
     }
 
-    function generateBookObject(id, title, author, year, isCompleted) {
+    function generateBookObject(id, title, author, year, isComplete) {
         return {
             id,
             title,
             author,
             year,
-            isCompleted
+            isComplete
         }
     }
 
@@ -86,10 +86,10 @@
         const id = generateId()
         const title = document.getElementById("bookFormTitle").value
         const author = document.getElementById("bookFormAuthor").value
-        const year = document.getElementById("bookFormYear").value
-        const isCompleted = document.getElementById("bookFormIsComplete").checked
+        const year = parseInt(document.getElementById("bookFormYear").value)
+        const isComplete = document.getElementById("bookFormIsComplete").checked
         
-        const bookObject = generateBookObject(id, title, author, year, isCompleted)
+        const bookObject = generateBookObject(id, title, author, year, isComplete)
         books.push(bookObject)
 
         document.dispatchEvent(new Event(RENDER_EVENT))
@@ -98,13 +98,16 @@
 
     function makeBook(bookObject) {
         const title = document.createElement("h3")
+        title.setAttribute("data-testid", "bookItemTitle")
         title.innerText = bookObject.title
 
         const author = document.createElement("p")
+        author.setAttribute("data-testid", "bookItemAuthor")
         author.classList.add("bookAuthor")
         author.innerText = bookObject.author
 
         const year = document.createElement("p")
+        year.setAttribute("data-testid", "bookItemYear")
         year.classList.add("bookYear")
         year.innerText = bookObject.year
 
@@ -114,6 +117,7 @@
         const buttonContainer = document.createElement("div")
         
         const removeButton= document.createElement("button")
+        removeButton.setAttribute("data-testid", "bookItemDeleteButton")
         removeButton.innerText = "Hapus buku"
         removeButton.classList.add("button")
         removeButton.addEventListener("click", function() {
@@ -121,6 +125,7 @@
         })
 
         const editButton = document.createElement("button")
+        removeButton.setAttribute("data-testid", "bookItemEditButton")
         editButton.innerText = "Edit buku"
         editButton.classList.add("button")
         editButton.addEventListener("click", function() {
@@ -129,8 +134,9 @@
         })
         
 
-        if(bookObject.isCompleted) {
+        if(bookObject.isComplete) {
             const incompleteButton = document.createElement("button")
+            incompleteButton.setAttribute("data-testid", "bookItemIsCompleteButton")
             incompleteButton.innerText = "Belum selesai dibaca"
             incompleteButton.classList.add("button")
             incompleteButton.addEventListener("click", function() {
@@ -139,6 +145,7 @@
             buttonContainer.append(incompleteButton, removeButton, editButton)
         } else {
             const completeButton = document.createElement("button")
+            completeButton.setAttribute("data-testid", "bookItemIsCompleteButton")
             completeButton.innerText = "Selesai dibaca" 
             completeButton.classList.add("button")
             completeButton.addEventListener("click", function() {
@@ -150,18 +157,18 @@
         buttonContainer.classList.add("buttonContainer")
 
         const container = document.createElement("div")
+        container.setAttribute("data-bookid", bookObject.id)
+        container.setAttribute("data-testid", "bookitem")
         container.classList.add("bookContainer")
-
         container.append(textContainer, buttonContainer)
-        container.setAttribute("id", `book-${bookObject.id}`)
-
+        
         return container
     }
 
     function moveBookToComplete(bookID) {
         const bookTarget = findBook(bookID)
         if(bookTarget === null) return
-        bookTarget.isCompleted = true
+        bookTarget.isComplete = true
         document.dispatchEvent(new Event(RENDER_EVENT))
         saveData()
     }
@@ -169,7 +176,7 @@
     function moveBookToIncomplete(bookID) {
         const bookTarget = findBook(bookID)
         if(bookTarget === null) return
-        bookTarget.isCompleted = false
+        bookTarget.isComplete = false
         document.dispatchEvent(new Event(RENDER_EVENT))
         saveData()
     }
@@ -186,7 +193,7 @@
         document.getElementById("bookFormTitle").value = bookObject.title
         document.getElementById("bookFormAuthor").value = bookObject.author
         document.getElementById("bookFormYear").value = bookObject.year
-        document.getElementById("bookFormIsComplete").checked = bookObject.isCompleted
+        document.getElementById("bookFormIsComplete").checked = bookObject.isComplete
 
         if(document.getElementById("bookFormIsComplete").checked) {
             changeSubmitText(true)
@@ -201,12 +208,12 @@
         const title = document.getElementById("bookFormTitle").value
         const author = document.getElementById("bookFormAuthor").value
         const year = document.getElementById("bookFormYear").value
-        const isCompleted = document.getElementById("bookFormIsComplete").checked
+        const isComplete = document.getElementById("bookFormIsComplete").checked
 
         const index = findBookIndex(bookIdToEdit)
         
         if(index !== -1) {
-            books[index] = generateBookObject(bookIdToEdit, title, author, year, isCompleted)
+            books[index] = generateBookObject(bookIdToEdit, title, author, year, isComplete)
             document.getElementById("sectionTitle").innerText = "Tambah Buku Baru"
             document.dispatchEvent(new Event(RENDER_EVENT))
             saveData()
@@ -258,7 +265,7 @@
         for(const book of books) {
             if(book.title.toLowerCase().includes(searchTitle)) {
                 const bookElement = makeBook(book)
-                if(book.isCompleted) {
+                if(book.isComplete) {
                     completeBookList.append(bookElement)
                 } else {
                     incompleteBookList.append(bookElement)
@@ -277,7 +284,7 @@
         for (const book of books) {
             const bookElement = makeBook(book)
             
-            if(book.isCompleted) {
+            if(book.isComplete) {
                 completedBookList.append(bookElement)
             } else {
                 uncompletedBookList.append(bookElement)

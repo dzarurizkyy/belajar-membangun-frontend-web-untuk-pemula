@@ -59,29 +59,30 @@
       <section>
         <h2 class="bookTitle">Belum selesai dibaca</h2>
         <div id="incompleteBookList" data-testid="incompleteBookList">
-          <div data-bookid="123123123" data-testid="bookItem">
-            <h3 data-testid="bookItemTitle"></h3>
-            <p data-testid="bookItemAuthor"></p>
-            <p data-testid="bookItemYear"></p>
+          <div data-bookid="{{ ID_buku }}" data-testid="bookItem">
+            <h3 data-testid="bookItemTitle">{{ judul_buku }}</h3>
+            <p data-testid="bookItemAuthor">Penulis: {{ penulis_buku }}</p>
+            <p data-testid="bookItemYear">Tahun: {{ tahun_rilis_buku }}</p>
             <div>
-              <button data-testid="bookItemIsCompleteButton"></button>
-              <button data-testid="bookItemDeleteButton"></button>
-              <button data-testid="bookItemEditButton"></button>
+              <button data-testid="bookItemIsCompleteButton">{{ tombol_untuk_ubah_kondisi }}</button>
+              <button data-testid="bookItemDeleteButton">{{ tombol_untuk_hapus }}</button>
+              <button data-testid="bookItemEditButton">{{ tombol_untuk_edit }}</button>
             </div>
+          </div>
           </div>
         </div>
       </section>
       <section>
         <h2 class="bookTitle">Selesai dibaca</h2>
         <div id="completeBookList" data-testid="completeBookList">
-          <div data-bookid="456456456" data-testid="bookItem">
-            <h3 data-testid="bookItemTitle"></h3>
-            <p data-testid="bookItemAuthor"></p>
-            <p data-testid="bookItemYear"></p>
+          <div data-bookid="{{ ID_buku }}" data-testid="bookItem">
+            <h3 data-testid="bookItemTitle">{{ judul_buku }}</h3>
+            <p data-testid="bookItemAuthor">Penulis: {{ penulis_buku }}</p>
+            <p data-testid="bookItemYear">Tahun: {{ tahun_rilis_buku }}</p>
             <div>
-              <button data-testid="bookItemIsCompleteButton"></button>
-              <button data-testid="bookItemDeleteButton"></button>
-              <button data-testid="bookItemEditButton"></button>
+              <button data-testid="bookItemIsCompleteButton">{{ tombol_untuk_ubah_kondisi }}</button>
+              <button data-testid="bookItemDeleteButton">{{ tombol_untuk_hapus }}</button>
+              <button data-testid="bookItemEditButton">{{ tombol_untuk_edit }}</button>
             </div>
           </div>
         </div>
