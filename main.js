@@ -125,7 +125,7 @@
         })
 
         const editButton = document.createElement("button")
-        removeButton.setAttribute("data-testid", "bookItemEditButton")
+        editButton.setAttribute("data-testid", "bookItemEditButton")
         editButton.innerText = "Edit buku"
         editButton.classList.add("button")
         editButton.addEventListener("click", function() {
@@ -158,7 +158,7 @@
 
         const container = document.createElement("div")
         container.setAttribute("data-bookid", bookObject.id)
-        container.setAttribute("data-testid", "bookitem")
+        container.setAttribute("data-testid", "bookItem")
         container.classList.add("bookContainer")
         container.append(textContainer, buttonContainer)
         
